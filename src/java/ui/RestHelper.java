@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author Fredrik
  */
-public class RestGetter {
+public class RestHelper {
     
     public static String getStringFromURL(String urlstring){
         String result = null;

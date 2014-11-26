@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package ui;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,11 +39,11 @@ public class PostBean {
         this.message = message;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -52,7 +55,7 @@ public class PostBean {
         this.user = user;
     }
     private String message;
-    private Date date;
+    private String date;
     private int user;
 
     /**
@@ -74,15 +77,15 @@ public class PostBean {
     }
 
     public static List<PostBean> getPostsFromUser(int userid) {
-        List<PostBean> list = new ArrayList<PostBean>();
         
-       PostBean post = new PostBean();
-       post.setUser(1);
-       post.setMessage("Ett meddelande");
-       post.setDate(new Date());
-       post.setId(1);
-       list.add(post);
+        String result = RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/feed?userId="+userid);
         
+        Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").create();
+        PostBean[] postarray = gson.fromJson(result, PostBean[].class);
+        ArrayList<PostBean> list = new ArrayList<>();
+        for(PostBean p:postarray){
+            list.add(p);
+        }
         return list;
     }
 

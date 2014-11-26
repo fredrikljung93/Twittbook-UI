@@ -5,6 +5,7 @@
  */
 package ui;
 
+import com.google.gson.Gson;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -84,7 +85,9 @@ public class RegisterBean {
         if(username.length()<3){
             return "Username needs to be at least three characters long";
         }
-        StoredUser user = null;
+        String result = RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/userbyname?username="+username);
+        Gson gson = new Gson();
+        StoredUser user = gson.fromJson(result, StoredUser.class);
         if(user==null){
             return "Username "+username+"  is available!";
         }

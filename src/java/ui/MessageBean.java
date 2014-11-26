@@ -77,7 +77,7 @@ public class MessageBean {
     }
     
     public List<UserBean> getMessageSenders(){
-        UserBean receiver = (UserBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        StoredUser receiver = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         List<StoredUser> senders = new ArrayList<StoredUser>();
         senders.add(new StoredUser("sändaruser", "meddelande",1));
         
