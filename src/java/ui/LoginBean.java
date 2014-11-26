@@ -52,9 +52,13 @@ public class LoginBean implements Serializable {
     }
 
     public String Login() {
-        StoredUser user = new StoredUser("kalle", "password", 1);
+        String result = RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/login?username="+username+"&"+"password="+password);
+        Gson gson = new Gson();
+        
+        
+        StoredUser user = gson.fromJson(result, StoredUser.class);
 
-        if (username.equals("kalle")) {
+        if (username!=null) {
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().getSessionMap().put("user", user);
             return "success";
