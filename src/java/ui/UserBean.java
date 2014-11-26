@@ -5,8 +5,19 @@
  */
 package ui;
 
+import com.google.gson.Gson;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -16,7 +27,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean(name = "UserBean")
 @SessionScoped
-public class UserBean implements Serializable{
+public class UserBean implements Serializable {
 
     private int id;
     private String username;
@@ -36,6 +47,7 @@ public class UserBean implements Serializable{
     public void setId(int id) {
         this.id = id;
     }
+
     public String getUsername() {
         return username;
     }
@@ -45,11 +57,13 @@ public class UserBean implements Serializable{
     }
 
     public static ArrayList<UserBean> getAllUsers() {
-        ArrayList<UserBean> users= new ArrayList<UserBean>();
-        
-        UserBean user = new UserBean(1, "kalle");
-        users.add(user);
-        
+        String result = RestGetter.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/allusers");
+        Gson gson = new Gson();
+        UserBean[] userarray = gson.fromJson(result, UserBean[].class);
+        ArrayList<UserBean> users = new ArrayList();
+        for(UserBean u:userarray){
+            users.add(u);
+        }
         return users;
     }
 

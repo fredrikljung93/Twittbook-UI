@@ -5,10 +5,19 @@ package ui;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import com.google.gson.Gson;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+
 /**
  *
  * @author Fredrik
@@ -42,24 +51,21 @@ public class LoginBean implements Serializable {
         return password;
     }
 
-    
     public String Login() {
-        StoredUser user = new StoredUser("kalle","password",1);
-        
-        if(username.equals("kalle")){
+        StoredUser user = new StoredUser("kalle", "password", 1);
+
+        if (username.equals("kalle")) {
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().getSessionMap().put("user", user);
             return "success";
-        }
-        else{
+        } else {
             return "failure";
         }
     }
-    
-       public String Logout() {
-          FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-          return "logout";
-    }
 
+    public String Logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "logout";
+    }
 
 }
