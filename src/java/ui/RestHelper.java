@@ -80,7 +80,7 @@ public class RestHelper {
         try {
             HttpClient client = HttpClientBuilder.create().build();
             
-            HttpPost httppost = new HttpPost("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/publishpost");
+            HttpPost httppost = new HttpPost("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/register");
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
             
             nameValuePairs.add(new BasicNameValuePair("username", user.getUsername() + ""));
