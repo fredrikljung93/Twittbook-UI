@@ -76,20 +76,19 @@ public class MessageBean {
         return "success";
     }
     
-    public List<UserBean> getMessageSenders(){
+    public List<MessageBean> getInbox(){
         StoredUser receiver = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         List<StoredUser> senders = new ArrayList<StoredUser>();
         senders.add(new StoredUser("sändaruser", "meddelande",1));
         
-        List<UserBean> beanSenders = new ArrayList<UserBean>();
+        ArrayList<MessageBean> messages = new ArrayList<MessageBean>();
         
-        for(StoredUser u:senders){
-            UserBean bean = new UserBean();
-            bean.setId(u.getId());
-            bean.setUsername(u.getUsername());
-            beanSenders.add(bean);
-        }
-        return beanSenders;
+        MessageBean message = new MessageBean();
+        message.setMessage("Hello hello!");
+        message.setId(1337);
+        message.setSender(1);
+     messages.add(message);
+        return messages;
     }
 
 }

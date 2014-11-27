@@ -65,8 +65,8 @@ public class RegisterBean {
         if (!password.equals(repeatedPassword)) {
             return "unmatchedpasswords";
         }
-        StoredUser user = new StoredUser();
-        if (user != null) {
+        String result = RestHelper.registerUser(this);
+        if (!result.equalsIgnoreCase("failure")) {
             return "success?faces-redirect=true";
         }
         return "failure?faces-redirect=true";

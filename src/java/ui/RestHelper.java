@@ -48,27 +48,6 @@ public class RestHelper {
         }
         return result;
     }
-
-    public static String register(String username, String password) {
-        HttpClient client = HttpClientBuilder.create().build();
-
-        HttpPost httppost = new HttpPost("addlinkhere");
-        MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-
-        builder.addTextBody("username", username);
-        builder.addTextBody("password", password);
-        httppost.setEntity((HttpEntity) builder.build());
-
-        HttpResponse response = null;
-        try {
-            response = client.execute(httppost);
-        } catch (IOException ex) {
-            Logger.getLogger(RestHelper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        HttpEntity resEntity = response.getEntity();
-        return response.getEntity().toString();
-    }
-
     public static String publishPost(int useridint, String message) {
         try {
             HttpClient client = HttpClientBuilder.create().build();
@@ -78,6 +57,34 @@ public class RestHelper {
             
             nameValuePairs.add(new BasicNameValuePair("userId", useridint + ""));
             nameValuePairs.add(new BasicNameValuePair("message", message));
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);
+            System.out.println("Chosen conten type: " + entity.getContentType());
+            httppost.setEntity(entity);
+            
+            HttpResponse response = null;
+            try {
+                response = client.execute(httppost);
+            } catch (IOException ex) {
+                System.out.println("IOEXCEPTION");
+                System.out.println("Exception message: " + ex.getMessage());
+            }
+            HttpEntity resEntity = response.getEntity();
+            return response.toString();
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(RestHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return "failure";
+        }
+    }
+    
+     public static String registerUser(RegisterBean user) {
+        try {
+            HttpClient client = HttpClientBuilder.create().build();
+            
+            HttpPost httppost = new HttpPost("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/publishpost");
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            
+            nameValuePairs.add(new BasicNameValuePair("username", user.getUsername() + ""));
+            nameValuePairs.add(new BasicNameValuePair("password", user.getPassword()));
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);
             System.out.println("Chosen conten type: " + entity.getContentType());
             httppost.setEntity(entity);
