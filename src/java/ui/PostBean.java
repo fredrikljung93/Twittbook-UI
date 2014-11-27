@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -64,7 +65,8 @@ public class PostBean {
     public PostBean() {
     }
 
-    public String createPost(String message) {
+    public String createPost(String messageparameter) {
+        StoredUser user = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         if(message==null){
             System.out.println("Create post received null");
             return "";
@@ -73,13 +75,15 @@ public class PostBean {
         if(message.equals("")){
             return "";
         }
+        String result = RestHelper.publishPost(user.getId(), message);
+        System.out.println("CreatePost result: "+result);
         return "success";
     }
 
     public static List<PostBean> getPostsFromUser(int userid) {
         
         String result = RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/feed?userId="+userid);
-        
+        System.out.println(result);
         Gson gson=  new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").create();
         PostBean[] postarray = gson.fromJson(result, PostBean[].class);
         ArrayList<PostBean> list = new ArrayList<>();
