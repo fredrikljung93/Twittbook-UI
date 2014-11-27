@@ -16,9 +16,9 @@
             </ui:insert>
         </div>
         <h3>Outbox</h3>
+        
         <h:outputText value="#{UserBean.getUser(param['id']).getUsername()}" />
-        
-        
+                <h:link value="Send message" outcome="newmessage.xhtml" />
           <h:dataTable value="#{PostBean.getPostsFromUser(param['id'])}" var="p"
     			styleClass="order-table"
     			headerClass="order-table-header"

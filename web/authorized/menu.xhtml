@@ -5,16 +5,20 @@
       xmlns:f="http://java.sun.com/jsf/core"     
       xmlns:h="http://java.sun.com/jsf/html">
     <h:body>
-      <h:link value="Home" outcome="index.xhtml" />
-      |
-      <h:link value="My profile" outcome="profile.xhtml?id=#{sessionScope.user.id}" />
-      |
-      <h:link value="Users" outcome="allusers.xhtml" />
-           |
-      <h:link value="Create post" outcome="newpost.xhtml" />
-      |
-         <h:form id="logout-form">
-             <h:commandButton id="button" value="Log out" action="#{LoginBean.Logout()}"/>
+        <h:link value="Home" outcome="index.xhtml" />
+        |
+        <h:link value="My profile" outcome="profile.xhtml?id=#{sessionScope.user.id}" />
+        |
+        <h:link value="Users" outcome="allusers.xhtml" />
+        |
+        <h:link value="Inbox" outcome="inbox.xhtml" />
+        |
+        <h:link value="Outbox" outcome="outbox.xhtml" />
+        |
+        <h:link value="Create post" outcome="newpost.xhtml" />
+        |
+        <h:form id="logout-form">
+            <h:commandButton id="button" value="Log out" action="#{LoginBean.Logout()}"/>
             <br/>
         </h:form>
     </h:body>
