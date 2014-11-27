@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"htth://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "htth://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"     
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-  
+
     <h:head>
         <title>Twittbook</title>
     </h:head>
     <h:body>
-       <div id="header">
+        <div id="header">
             <ui:insert name="header" >
                 <ui:include src="/authorized/menu.xhtml" />
             </ui:insert>
         </div>
         <h3>Inbox</h3>
-      <h:outputText value="#{UserBean.getUser(param['id']).getUsername()}" />
-        
-        
+        <h:outputText value="#{UserBean.getUser(param['id']).getUsername()}" />
+
+
         <h:dataTable value="#{MessageBean.getInbox()}" var="m"
-    			styleClass="order-table"
-    			headerClass="order-table-header"
-    			rowClasses="order-table-odd-row,order-table-even-row"
-    		>
- 
-    		<h:column>
-    			<f:facet name="header">
-    				User
-    			</f:facet>
-    				#{m.sender}
-    		</h:column>
-            
+                     styleClass="order-table"
+                     headerClass="order-table-header"
+                     rowClasses="order-table-odd-row,order-table-even-row"
+                     >
+
             <h:column>
-    			<f:facet name="header">
-    				Message
-    			</f:facet>
-    				#{m.message}
-    		</h:column>
- 
-    	</h:dataTable>
+                <f:facet name="header">
+                    From
+                </f:facet>
+                <h:link value="#{UserBean.getUser(m.sender).getUsername()}" outcome="profile.xhtml?id=#{m.sender}" />
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">
+                    Message
+                </f:facet>
+                #{m.message}
+            </h:column>
+
+        </h:dataTable>
     </h:body>
 </html>
