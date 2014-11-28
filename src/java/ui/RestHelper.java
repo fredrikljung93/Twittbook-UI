@@ -56,7 +56,7 @@ public class RestHelper {
 
             nameValuePairs.add(new BasicNameValuePair("userId", useridint + ""));
             nameValuePairs.add(new BasicNameValuePair("message", message));
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs, "UTF-8");
             System.out.println("Chosen conten type: " + entity.getContentType());
             httppost.setEntity(entity);
 
@@ -84,7 +84,7 @@ public class RestHelper {
 
             nameValuePairs.add(new BasicNameValuePair("username", user.getUsername() + ""));
             nameValuePairs.add(new BasicNameValuePair("password", user.getPassword()));
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs, "UTF-8");
             System.out.println("Chosen conten type: " + entity.getContentType());
             httppost.setEntity(entity);
 
@@ -114,7 +114,7 @@ public class RestHelper {
             nameValuePairs.add(new BasicNameValuePair("message", message));
             nameValuePairs.add(new BasicNameValuePair("subject", subject));
             nameValuePairs.add(new BasicNameValuePair("sender", sender + ""));
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs,"UTF-8");
             System.out.println("Chosen conten type: " + entity.getContentType());
             httppost.setEntity(entity);
 
@@ -142,7 +142,7 @@ public class RestHelper {
 
             nameValuePairs.add(new BasicNameValuePair("userId", user + ""));
             nameValuePairs.add(new BasicNameValuePair("description", description));
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs,"UTF-8");
             System.out.println("Chosen conten type: " + entity.getContentType());
             httppost.setEntity(entity);
 
