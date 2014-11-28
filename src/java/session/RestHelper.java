@@ -26,7 +26,7 @@ import org.apache.http.message.BasicNameValuePair;
 public class RestHelper {
 
     /**@param urlstring
-     @return String , json String acquired from webservice.*/
+     @return HTTP-response showing if request to web service was successful.*/
     public static String getStringFromURL(String urlstring) {
         String result = null;
         try {
@@ -74,8 +74,8 @@ public class RestHelper {
         }
     }
 
-    /**@param RegisterBean helper class representing a newly created User.
-     @return String , response string after request at web service.*/
+    /**@param user helper class UserBean representing a newly created User.
+     @return HTTP-response showing if web service call was successful.*/
     public static String registerUser(RegisterBean user) {
         try {
             HttpClient client = HttpClientBuilder.create().build();
@@ -107,7 +107,8 @@ public class RestHelper {
     /**@param sender PK in DB of User.
      @param receiver PK in DB of User.
      @param message message being sent.
-     @param subject title of the message being sent.*/
+     @param subject title of the message being sent.
+     @return HTTP-response showing if web service call was successful.*/
     public static String sendMessage(int sender, int receiver, String message, String subject) {
         try {
             HttpClient client = HttpClientBuilder.create().build();
@@ -138,6 +139,10 @@ public class RestHelper {
         }
     }
 
+    /**@param user PK in DB of USER.
+     @param description
+     @return HTTP-response showing if web service request was successful.
+     Method is used to update the descruption in DB of the specific User.*/
     public static String updateDescription(int user, String description) {
         try {
             HttpClient client = HttpClientBuilder.create().build();
