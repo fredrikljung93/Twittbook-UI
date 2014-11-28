@@ -12,7 +12,7 @@ import session.RestHelper;
 import session.StoredUser;
 
 /**
- *
+ * Bean for register
  * @author Fredrik
  */
 @ManagedBean(name = "RegisterBean")
@@ -61,7 +61,10 @@ public class RegisterBean {
     public void setRepeatedPassword(String repeatedPassword) {
         this.repeatedPassword = repeatedPassword;
     }
-
+ /**
+  * Registers user
+  * @return resultcode
+  */
     public String Register() {
 
         if (!password.equals(repeatedPassword)) {
@@ -74,6 +77,11 @@ public class RegisterBean {
         return "failure?faces-redirect=true";
 
     }
+    /**
+     * Checks if username is valid regarding username length and uniqueness
+     * @param params not used
+     * @return resultcode
+     */
     public String validateUsername(String params){
         if(username==null){
                   System.out.println("checkifusernamexists received null");  

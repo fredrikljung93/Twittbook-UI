@@ -21,7 +21,7 @@ import session.RestHelper;
 import session.StoredUser;
 
 /**
- *
+ * Bean for login functionality
  * @author Fredrik
  */
 @ManagedBean(name = "LoginBean")
@@ -53,6 +53,11 @@ public class LoginBean implements Serializable {
         return password;
     }
 
+    /**
+     * Tries to login user using the LoginBeans current username and password.
+     * If successful, the user will be stored in the session as a StoredUser object
+     * @return restultcode
+     */
     public String Login() {
         String result = RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/login?username="+username+"&"+"password="+password);
         Gson gson = new Gson();
@@ -69,6 +74,10 @@ public class LoginBean implements Serializable {
         }
     }
 
+    /**
+     * Invalidates the session
+     * @return 
+     */
     public String Logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "logout";

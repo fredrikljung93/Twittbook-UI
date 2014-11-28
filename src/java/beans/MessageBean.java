@@ -18,13 +18,15 @@ import session.RestHelper;
 import session.StoredUser;
 
 /**
- *
+ * Bean for representing messages
  * @author Fredrik
  */
 @ManagedBean(name = "MessageBean")
 @SessionScoped
 public class MessageBean {
-    
+    /**
+     * Id of message that is marked as currentlty open by the user
+     */
     private int openedMessage;
 
     public int getId() {
@@ -111,6 +113,10 @@ public class MessageBean {
     public MessageBean() {
     }
 
+    /**
+     * Sends message to user/users
+     * @return resultcode
+     */
     public String sendMessage() {
         StoredUser sender = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         String result;
@@ -120,6 +126,10 @@ public class MessageBean {
         return "success";
     }
     
+    /**
+     * Returns the messagebean of the message with the id set by openedMessage field
+     * @return 
+     */
     public MessageBean openMessage(){
         if(openedMessage==0){
             return null;
@@ -130,7 +140,10 @@ public class MessageBean {
          
        return gson.fromJson(result, MessageBean.class);
     }
-
+/**
+ * Returs current users inbox
+ * @return 
+ */
     public List<MessageBean> getInbox() {
         StoredUser receiver = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         String result = RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/inbox?userId=" + receiver.getId());
@@ -145,7 +158,10 @@ public class MessageBean {
         Collections.reverse(beanlist);
         return beanlist;
     }
-
+/**
+ * Returns current users outbox
+ * @return 
+ */
     public List<MessageBean> getOutbox() {
         StoredUser sender = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         String result = RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/outbox?userId=" + sender.getId());

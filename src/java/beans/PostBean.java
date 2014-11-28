@@ -18,7 +18,7 @@ import session.RestHelper;
 import session.StoredUser;
 
 /**
- *
+ * Bean for representing a post
  * @author Fredrik
  */
 @ManagedBean(name = "PostBean")
@@ -67,7 +67,11 @@ public class PostBean {
      */
     public PostBean() {
     }
-
+/**
+ * Publishes post
+ * @param messageparameter not used
+ * @return resultcode
+ */
     public String createPost(String messageparameter) {
         StoredUser user = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         if(message==null){
@@ -82,7 +86,11 @@ public class PostBean {
         System.out.println("CreatePost result: "+result);
         return "success";
     }
-
+/**
+ * Returns posts from a single user
+ * @param userid id of user
+ * @return resultcode
+ */
     public static List<PostBean> getPostsFromUser(int userid) {
         
         String result = RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/feed?userId="+userid);
