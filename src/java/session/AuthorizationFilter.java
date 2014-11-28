@@ -11,7 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+/**Restricts access to certain pages if a User is not logged in.*/
 @WebFilter("/authorized/*")
 public class AuthorizationFilter implements Filter {
 

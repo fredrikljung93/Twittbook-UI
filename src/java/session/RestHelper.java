@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package session;
 
 import beans.UserBean;
@@ -23,16 +19,14 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
-/**
- *
- * @author Fredrik
- */
+/**Class to communicate with RESTful web services.*/
 public class RestHelper {
 
+    /**@param urlstring
+     @return String , json String acquired from webservice.*/
     public static String getStringFromURL(String urlstring) {
         String result = null;
         try {
@@ -49,6 +43,9 @@ public class RestHelper {
         return result;
     }
 
+    /**@param useridint PK of User in DB.
+     @param message message to be posted.
+    @return String , response string after web service is requested.*/
     public static String publishPost(int useridint, String message) {
         try {
             HttpClient client = HttpClientBuilder.create().build();
@@ -77,6 +74,8 @@ public class RestHelper {
         }
     }
 
+    /**@param RegisterBean helper class representing a newly created User.
+     @return String , response string after request at web service.*/
     public static String registerUser(RegisterBean user) {
         try {
             HttpClient client = HttpClientBuilder.create().build();
@@ -105,6 +104,10 @@ public class RestHelper {
         }
     }
 
+    /**@param sender PK in DB of User.
+     @param receiver PK in DB of User.
+     @param message message being sent.
+     @param subject title of the message being sent.*/
     public static String sendMessage(int sender, int receiver, String message, String subject) {
         try {
             HttpClient client = HttpClientBuilder.create().build();
