@@ -22,10 +22,10 @@
                                        itemLabel="#{u.username}" itemValue="#{u.id}" />
    		</h:selectManyListbox>
             <h:outputText value="Message:"/>
-            <h:inputText value="#{message.message}" id="message"/>
+            <h:inputText value="#{MessageBean.message}" id="message"/>
             <br/>
             <br/>
-            <h:commandButton id="button" value="Submit" action="#{message.CreateMessage}"/>
+            <h:commandButton id="button" value="Submit" action="#{MessageBean.sendMessage()}"/>
             <br/>
         </h:form>
     </h:body>

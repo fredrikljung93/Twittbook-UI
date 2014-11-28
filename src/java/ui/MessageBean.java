@@ -73,7 +73,12 @@ public class MessageBean {
     public MessageBean() {
     }
 
-    public String CreateMessage() {
+    public String sendMessage() {
+        StoredUser sender = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        String result;
+        for(String receiver: receivers){
+            result = RestHelper.sendMessage(sender.getId(),Integer.parseInt(receiver),this.message);
+        }
         return "success";
     }
     
