@@ -18,11 +18,8 @@
         <h3>Profile</h3>
         
         <h:form rendered="#{sessionScope.user.id==param['id']}">
-            <h:outputText value="DIN PROFIL! :D"/>
+                    <h:link value="Edit profile" outcome="editprofile.xhtml" />
         </h:form>
-        
-        
-        <h:outputText value="#{UserBean.getUser(param['id']).getUsername()}" />
         
         
           <h:dataTable value="#{PostBean.getPostsFromUser(param['id'])}" var="p"
@@ -33,17 +30,10 @@
  
     		<h:column>
     			<f:facet name="header">
-    				Message
+    				Posts
     			</f:facet>
     				#{p.message}
     		</h:column>
-          	<h:column>
-    			<f:facet name="header">
-    				User
-    			</f:facet>
-    				#{p.user}
-    		</h:column>
- 
     	</h:dataTable>
     </h:body>
 </html>

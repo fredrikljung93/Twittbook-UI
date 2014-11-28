@@ -15,25 +15,17 @@
                 <ui:include src="/authorized/menu.xhtml" />
             </ui:insert>
         </div>
-        <h3>Profile</h3>
+        <h3>Welcome</h3>
+                
+        <h:outputText value="Username: #{sessionScope.user.username}" /> 
         
-        <h:form rendered="#{sessionScope.user.id==param['id']}">
-                    <h:link value="Edit profile" outcome="editprofile.xhtml" />
+         <h:form id="login-form">
+            <h:outputText value="Description:"/>
+            <h:inputText value="#{UserBean.description}" id="description"/>
+            <br/>
+                        <br/>
+                        <h:commandButton id="button" value="Save" action="#{UserBean.submitEditedUser()}"/>
+            <br/>
         </h:form>
-        
-        
-          <h:dataTable value="#{PostBean.getPostsFromUser(param['id'])}" var="p"
-    			styleClass="order-table"
-    			headerClass="order-table-header"
-    			rowClasses="order-table-odd-row,order-table-even-row"
-    		>
- 
-    		<h:column>
-    			<f:facet name="header">
-    				Posts
-    			</f:facet>
-    				#{p.message}
-    		</h:column>
-    	</h:dataTable>
     </h:body>
 </html>

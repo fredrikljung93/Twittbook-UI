@@ -30,7 +30,7 @@
                 <f:facet name="header">
                     To
                 </f:facet>
-                <h:link value="#{UserBean.getUser(m.sender).getUsername()}" outcome="profile.xhtml?id=#{m.sender}" />
+                <h:link value="#{UserBean.getUser(m.receiver).getUsername()}" outcome="profile.xhtml?id=#{m.receiver}" />
             </h:column>
 
             <h:column>
@@ -38,6 +38,13 @@
                     Message
                 </f:facet>
                 #{m.message}
+            </h:column>
+            
+              <h:column>
+                <f:facet name="header">
+                    Date
+                </f:facet>
+                #{m.date}
             </h:column>
 
         </h:dataTable>

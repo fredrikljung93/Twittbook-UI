@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -90,6 +91,7 @@ public class PostBean {
         for(PostBean p:postarray){
             list.add(p);
         }
+        Collections.reverse(list);
         return list;
     }
 

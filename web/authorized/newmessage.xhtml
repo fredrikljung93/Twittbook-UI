@@ -17,7 +17,7 @@
         </div>
         <h3>Write new message</h3>
         <h:form id="login-form">
-            <h:selectManyListbox value="#{MessageBean.receiver}">
+            <h:selectManyListbox value="#{MessageBean.receivers}">
    			<f:selectItems value="#{UserBean.getAllUsers()}" var="u"
                                        itemLabel="#{u.username}" itemValue="#{u.id}" />
    		</h:selectManyListbox>
