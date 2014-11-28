@@ -18,7 +18,7 @@ import session.RestHelper;
 import session.StoredUser;
 
 /**
- *
+ * Bean for representing a User
  * @author jonas_000
  */
 @ManagedBean(name = "UserBean")
@@ -75,7 +75,10 @@ public class UserBean implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
-
+/**
+ * Returns all registered users
+ * @return all registered users
+ */
     public static ArrayList<UserBean> getAllUsers() {
         String result = RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/allusers");
         Gson gson = new Gson();
@@ -86,7 +89,11 @@ public class UserBean implements Serializable {
         }
         return users;
     }
-
+/**
+ * Returns single user
+ * @param userid id of user
+ * @return user
+ */
     public static UserBean getUser(int userid) {
         String result = RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/user?userId=" + userid);
         Gson gson = new Gson();
@@ -94,6 +101,10 @@ public class UserBean implements Serializable {
         return user;
     }
 
+    /**
+     * Submits edited data in user
+     * @return successcode
+     */
     public String submitEditedUser() {
         StoredUser user = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         RestHelper.updateDescription(user.getId(), description);
