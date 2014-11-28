@@ -20,7 +20,9 @@
             <h:selectManyListbox value="#{MessageBean.receivers}">
    			<f:selectItems value="#{UserBean.getAllUsers()}" var="u"
                                        itemLabel="#{u.username}" itemValue="#{u.id}" />
-   		</h:selectManyListbox>
+            </h:selectManyListbox><br></br>
+             <h:outputText value="Subject"/>
+             <h:inputText value="#{MessageBean.subject}" id="subject"/>
             <h:outputText value="Message:"/>
             <h:inputText value="#{MessageBean.message}" id="message"/>
             <br/>

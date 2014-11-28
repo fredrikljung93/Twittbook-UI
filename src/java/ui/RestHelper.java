@@ -103,7 +103,7 @@ public class RestHelper {
         }
     }
 
-    public static String sendMessage(int sender, int receiver, String message) {
+    public static String sendMessage(int sender, int receiver, String message, String subject) {
         try {
             HttpClient client = HttpClientBuilder.create().build();
 
@@ -112,6 +112,7 @@ public class RestHelper {
 
             nameValuePairs.add(new BasicNameValuePair("receiver", receiver + ""));
             nameValuePairs.add(new BasicNameValuePair("message", message));
+            nameValuePairs.add(new BasicNameValuePair("subject", subject));
             nameValuePairs.add(new BasicNameValuePair("sender", sender + ""));
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);
             System.out.println("Chosen conten type: " + entity.getContentType());
@@ -131,7 +132,7 @@ public class RestHelper {
             return "failure";
         }
     }
-    
+
     public static String updateDescription(int user, String description) {
         try {
             HttpClient client = HttpClientBuilder.create().build();
