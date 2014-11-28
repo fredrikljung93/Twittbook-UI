@@ -5,6 +5,7 @@
  */
 package ui;
 
+import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,11 +45,11 @@ public class MessageBean {
         this.message = message;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
     
@@ -64,7 +65,7 @@ public class MessageBean {
     public void setReceiver(List<String> receivers) {
         this.receivers = receivers;
     }
-    private Date date;
+    private String date;
 
     /**
      * Creates a new instance of MessageBean
@@ -78,17 +79,18 @@ public class MessageBean {
     
     public List<MessageBean> getInbox(){
         StoredUser receiver = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        List<StoredUser> senders = new ArrayList<StoredUser>();
-        senders.add(new StoredUser("sändaruser", "meddelande",1));
+        String result=RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/inbox?userId="+receiver.getId());
         
-        ArrayList<MessageBean> messages = new ArrayList<MessageBean>();
+        Gson gson = new Gson();
+        MessageBean[] beanarray = gson.fromJson(result, MessageBean[].class);
+        List<MessageBean> beanlist = new ArrayList<>();
         
-        MessageBean message = new MessageBean();
-        message.setMessage("Hello hello!");
-        message.setId(1337);
-        message.setSender(1);
-     messages.add(message);
-        return messages;
+        for(MessageBean bean: beanarray){
+            beanlist.add(bean);
+        }
+        
+        
+        return beanlist;
     }
 
 }
