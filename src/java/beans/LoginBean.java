@@ -1,4 +1,4 @@
-package ui;
+package beans;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import session.RestHelper;
+import session.StoredUser;
 
 /**
  *

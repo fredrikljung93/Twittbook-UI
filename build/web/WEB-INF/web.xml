@@ -6,7 +6,7 @@
     </context-param>
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
-        <filter-class>ui.AuthorizationFilter</filter-class>
+        <filter-class>session.AuthorizationFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthorizationFilter</filter-name>
