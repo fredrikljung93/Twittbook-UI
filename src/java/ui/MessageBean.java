@@ -92,5 +92,19 @@ public class MessageBean {
         
         return beanlist;
     }
+    
+        public List<MessageBean> getOutbox(){
+        StoredUser sender = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        String result=RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/outbox?userId="+sender.getId());
+        
+        Gson gson = new Gson();
+        MessageBean[] beanarray = gson.fromJson(result, MessageBean[].class);
+        List<MessageBean> beanlist = new ArrayList<>();
+        
+        for(MessageBean bean: beanarray){
+            beanlist.add(bean);
+        }
+        return beanlist;
+    }
 
 }
