@@ -37,9 +37,7 @@ public class RestHelper {
             URL url = new URL(urlstring);
             BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
 
-            if ((result = in.readLine()) != null) {
-                System.out.println(result);
-            }
+            result = in.readLine();
             in.close();
         } catch (MalformedURLException ex) {
             Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -48,19 +46,77 @@ public class RestHelper {
         }
         return result;
     }
+
     public static String publishPost(int useridint, String message) {
         try {
             HttpClient client = HttpClientBuilder.create().build();
-            
+
             HttpPost httppost = new HttpPost("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/publishpost");
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            
+
             nameValuePairs.add(new BasicNameValuePair("userId", useridint + ""));
             nameValuePairs.add(new BasicNameValuePair("message", message));
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);
             System.out.println("Chosen conten type: " + entity.getContentType());
             httppost.setEntity(entity);
-            
+
+            HttpResponse response = null;
+            try {
+                response = client.execute(httppost);
+            } catch (IOException ex) {
+                System.out.println("IOEXCEPTION");
+                System.out.println("Exception message: " + ex.getMessage());
+            }
+            HttpEntity resEntity = response.getEntity();
+            return response.toString();
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(RestHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return "failure";
+        }
+    }
+
+    public static String registerUser(RegisterBean user) {
+        try {
+            HttpClient client = HttpClientBuilder.create().build();
+
+            HttpPost httppost = new HttpPost("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/register");
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+            nameValuePairs.add(new BasicNameValuePair("username", user.getUsername() + ""));
+            nameValuePairs.add(new BasicNameValuePair("password", user.getPassword()));
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);
+            System.out.println("Chosen conten type: " + entity.getContentType());
+            httppost.setEntity(entity);
+
+            HttpResponse response = null;
+            try {
+                response = client.execute(httppost);
+            } catch (IOException ex) {
+                System.out.println("IOEXCEPTION");
+                System.out.println("Exception message: " + ex.getMessage());
+            }
+            HttpEntity resEntity = response.getEntity();
+            return response.toString();
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(RestHelper.class.getName()).log(Level.SEVERE, null, ex);
+            return "failure";
+        }
+    }
+
+    public static String sendMessage(int sender, int receiver, String message) {
+        try {
+            HttpClient client = HttpClientBuilder.create().build();
+
+            HttpPost httppost = new HttpPost("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/sendpm");
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+            nameValuePairs.add(new BasicNameValuePair("receiver", receiver + ""));
+            nameValuePairs.add(new BasicNameValuePair("message", message));
+            nameValuePairs.add(new BasicNameValuePair("sender", sender + ""));
+            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);
+            System.out.println("Chosen conten type: " + entity.getContentType());
+            httppost.setEntity(entity);
+
             HttpResponse response = null;
             try {
                 response = client.execute(httppost);
@@ -76,48 +132,19 @@ public class RestHelper {
         }
     }
     
-     public static String registerUser(RegisterBean user) {
+    public static String updateDescription(int user, String description) {
         try {
             HttpClient client = HttpClientBuilder.create().build();
-            
-            HttpPost httppost = new HttpPost("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/register");
+
+            HttpPost httppost = new HttpPost("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/changedescription");
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            
-            nameValuePairs.add(new BasicNameValuePair("username", user.getUsername() + ""));
-            nameValuePairs.add(new BasicNameValuePair("password", user.getPassword()));
+
+            nameValuePairs.add(new BasicNameValuePair("userId", user + ""));
+            nameValuePairs.add(new BasicNameValuePair("description", description));
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);
             System.out.println("Chosen conten type: " + entity.getContentType());
             httppost.setEntity(entity);
-            
-            HttpResponse response = null;
-            try {
-                response = client.execute(httppost);
-            } catch (IOException ex) {
-                System.out.println("IOEXCEPTION");
-                System.out.println("Exception message: " + ex.getMessage());
-            }
-            HttpEntity resEntity = response.getEntity();
-            return response.toString();
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(RestHelper.class.getName()).log(Level.SEVERE, null, ex);
-            return "failure";
-        }
-    }
-     
-       public static String sendMessage(int sender, int receiver, String message) {
-        try {
-            HttpClient client = HttpClientBuilder.create().build();
-            
-            HttpPost httppost = new HttpPost("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/sendpm");
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-            
-            nameValuePairs.add(new BasicNameValuePair("receiver", receiver + ""));
-            nameValuePairs.add(new BasicNameValuePair("message", message));
-            nameValuePairs.add(new BasicNameValuePair("sender", sender+""));
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(nameValuePairs);
-            System.out.println("Chosen conten type: " + entity.getContentType());
-            httppost.setEntity(entity);
-            
+
             HttpResponse response = null;
             try {
                 response = client.execute(httppost);

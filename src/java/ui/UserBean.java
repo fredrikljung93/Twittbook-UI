@@ -8,8 +8,12 @@ package ui;
 import com.google.gson.Gson;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -32,7 +36,21 @@ public class UserBean implements Serializable {
     }
 
     public UserBean() {
-        this.description="descriptiontest";
+        StoredUser user = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        if (user != null) {
+            String URL="http://a.fredrikljung.com:8080/Twittbook/webresources/rest/user?userId=" + user.getId();
+            System.out.println("Userbean constructor url: "+URL);
+            String result = RestHelper.getStringFromURL(URL);
+            Gson gson = new Gson();
+            Map<String, String> downloaded = gson.fromJson(result, HashMap.class);
+            if (downloaded != null) {
+                System.err.println("Setting description");
+                this.description = downloaded.get("description");
+            }
+            else{
+                  System.err.println("Did not set description even though logged in");
+            }
+        }
     }
 
     public UserBean(int id, String username) {
@@ -61,21 +79,24 @@ public class UserBean implements Serializable {
         Gson gson = new Gson();
         UserBean[] userarray = gson.fromJson(result, UserBean[].class);
         ArrayList<UserBean> users = new ArrayList();
-        for(UserBean u:userarray){
+        for (UserBean u : userarray) {
             users.add(u);
         }
         return users;
     }
 
     public static UserBean getUser(int userid) {
-        String result = RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/user?userId="+userid);
+        String result = RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/user?userId=" + userid);
         Gson gson = new Gson();
         UserBean user = gson.fromJson(result, UserBean.class);
         return user;
     }
-    
-    public String submitEditedUser(){
+
+    public String submitEditedUser() {
+        StoredUser user = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        RestHelper.updateDescription(user.getId(), description);
         return "success";
     }
+    
 
 }

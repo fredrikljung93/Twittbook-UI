@@ -9,8 +9,10 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -18,11 +20,22 @@ import javax.faces.context.FacesContext;
  * @author Fredrik
  */
 @ManagedBean(name = "MessageBean")
-@RequestScoped
+@SessionScoped
 public class MessageBean {
+    
+    private int openedMessage;
 
     public int getId() {
         return id;
+    }
+
+    public int getOpenedMessageID() {
+        return openedMessage;
+    }
+
+    public void setOpenedMessageID(int openedMessage) {
+        System.out.println("Opened message was set to "+openedMessage);
+        this.openedMessage = openedMessage;
     }
 
     public void setId(int id) {
@@ -103,6 +116,17 @@ public class MessageBean {
             result = RestHelper.sendMessage(sender.getId(), Integer.parseInt(receiver), this.message);
         }
         return "success";
+    }
+    
+    public MessageBean openMessage(){
+        if(openedMessage==0){
+            return null;
+        }
+       String result = RestHelper.getStringFromURL("http://a.fredrikljung.com:8080/Twittbook/webresources/rest/getpm?messageId="+openedMessage);
+       
+         Gson gson = new Gson();
+         
+       return gson.fromJson(result, MessageBean.class);
     }
 
     public List<MessageBean> getInbox() {

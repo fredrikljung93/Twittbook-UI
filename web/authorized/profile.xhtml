@@ -21,6 +21,11 @@
                     <h:link value="Edit profile" outcome="editprofile.xhtml" />
         </h:form>
         
+        <h:outputText value="Username: #{UserBean.getUser(param['id']).getUsername()}" /> <br></br>
+        <h:outputText value="Description: #{UserBean.getUser(param['id']).getDescription()}" /> <br></br>
+        <br></br>
+        <br></br>
+        
         
           <h:dataTable value="#{PostBean.getPostsFromUser(param['id'])}" var="p"
     			styleClass="order-table"
