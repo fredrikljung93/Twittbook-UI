@@ -38,21 +38,6 @@ public class UserBean implements Serializable {
     }
 
     public UserBean() {
-        StoredUser user = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        if (user != null) {
-            String URL="http://a.fredrikljung.com:8080/Twittbook/webresources/rest/user?userId=" + user.getId();
-            System.out.println("Userbean constructor url: "+URL);
-            String result = RestHelper.getStringFromURL(URL);
-            Gson gson = new Gson();
-            Map<String, String> downloaded = gson.fromJson(result, HashMap.class);
-            if (downloaded != null) {
-                System.err.println("Setting description");
-                this.description = downloaded.get("description");
-            }
-            else{
-                  System.err.println("Did not set description even though logged in");
-            }
-        }
     }
 
     public UserBean(int id, String username) {
@@ -109,6 +94,16 @@ public class UserBean implements Serializable {
         StoredUser user = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         RestHelper.updateDescription(user.getId(), description);
         return "success";
+    }
+    /**
+     * Fills bean with data from the current sessions user
+     */
+    public void fillBean(){
+        StoredUser user = (StoredUser) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        UserBean downloaded = getUser(user.getId());
+        this.description=downloaded.getDescription();
+        this.username=downloaded.getUsername();
+        this.id=downloaded.getId();
     }
     
 

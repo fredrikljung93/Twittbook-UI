@@ -19,6 +19,7 @@
                 
         <h:outputText value="Username: #{sessionScope.user.username}" /> 
         
+        <f:event type="preRenderView" listener="#{UserBean.fillBean()}"/>
          <h:form id="login-form">
             <h:outputText value="Description:"/>
             <h:inputText value="#{UserBean.description}" id="description"/>
