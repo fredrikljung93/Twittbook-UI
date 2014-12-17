@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <div>
+            <input id="messagefield" type="text"></input>
+            <input type="submit" value="Start" onclick="start()" />
+        </div>
+        <div id="messages"></div>
+        <script type="text/javascript">
+            var webSocket =
+                    new WebSocket('ws://a.fredrikljung.com:4321');
+
+            webSocket.onerror = function (event) {
+                onError(event)
+            };
+
+            webSocket.onopen = function (event) {
+                onOpen(event)
+                webSocket.send('#{sessionScope.user.id}');
+                webSocket.send('#{param['user']}');
+            };
+
+            webSocket.onmessage = function (event) {
+                onMessage(event)
+            };
+
+            function onMessage(event) {
+                document.getElementById('messages').innerHTML
+                        += '<br />Received:' + event.data;
+            }
+
+            function onOpen(event) {
+                document.getElementById('messages').innerHTML
+                        = 'Connection established';
+            }
+
+            function onError(event) {
+                alert(event.data);
+            }
+
+            function start() {
+                webSocket.send(document.getElementById('messagefield').value);
+                document.getElementById('messages').innerHTML
+                        += '<br />Sent:'+document.getElementById('messagefield').value;
+                return false;
+            }
+        </script>
+    </h:body>
+</html>
+
