@@ -26,6 +26,12 @@
     			</f:facet>
                           <h:link value="#{c.username}" outcome="profile.xhtml?id=#{c.id}" />
     		</h:column>
+            <h:column>
+    			<f:facet name="header">
+    				NodeJSChat
+    			</f:facet>
+                          <h:link value="Chat using Node.js" outcome="nodejschat.xhtml?user=#{c.id}" />
+    		</h:column>
  
     	</h:dataTable>
     </h:body>
